@@ -106,6 +106,7 @@ const Header = ({ toggleTheme, mode }) => {
                                 <Button
                                     component={Link}
                                     to="/profile"
+                                    startIcon={<PersonIcon />}
                                     sx={{ color: 'inherit', textTransform: 'none' }}
                                 >
                                     My Profile
