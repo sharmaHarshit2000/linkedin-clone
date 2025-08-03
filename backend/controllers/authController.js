@@ -1,6 +1,7 @@
 import bcrypt from "bcrypt";
 import jwt from "jsonwebtoken";
 import User from "../models/User.js";
+import Post from "../models/Post.js";
 
 const generateToken = (userId) => {
   return jwt.sign({ userId }, process.env.JWT_SECRET, {
@@ -94,10 +95,13 @@ export const getMe = async (req, res) => {
     if (!user) {
       return res.status(404).json({ message: "User not found" });
     }
-
+    const posts = await Post.find({ author: user._id })
+      .populate("author", "name")
+      .sort({ createdAt: -1 });
     res.status(200).json({
       message: "User fetched successfully",
       user,
+      posts,
     });
   } catch (err) {
     console.error("GetMe error:", err);
